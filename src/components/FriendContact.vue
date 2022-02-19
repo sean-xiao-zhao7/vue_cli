@@ -1,40 +1,42 @@
 <template>
     <li>
-        <h2>{{ person.name }}</h2>
+        <h2>{{ name }}</h2>
         <button @click="showHide">Show details</button>
+        <button @click="setFav">Fav/Unfav</button>
         <ul v-if="detailsVisible">
             <li>
                 <strong>Phone:</strong>
-                {{ person.phone }}
+                {{ phone }}
             </li>
             <li>
                 <strong>Email:</strong>
-                {{ person.email }}
+                {{ email }}
             </li>
             <li>
                 <strong>ID:</strong>
-                {{ person.id }}
+                {{ id }}
             </li>
+            <li>FAV: {{ fav }}</li>
         </ul>
     </li>
 </template>
 
 <script>
 export default {
+    props: ["name", "phone", "email", "fav", "id"],
     data() {
         return {
             detailsVisible: false,
-            person: {
-                name: "Test",
-                id: "asdfasdfasdf",
-                email: "test@dasdfasdsf.com",
-            },
         };
     },
     methods: {
         showHide() {
             this.detailsVisible = !this.detailsVisible;
         },
+        setFav() {
+            this.$emit("setFav", this.id);
+        },
+        favEmit() {},
     },
 };
 </script>

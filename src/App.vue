@@ -1,9 +1,16 @@
 <template>
     <section>
         <header><h1>People</h1></header>
-        <ul>
-            <person></person>
-            <person></person>
+        <add-person @add-person="addPerson"></add-person>
+        <ul v-for="person of friends" :key="person.id">
+            <person
+                :name="person.name"
+                :email="person.email"
+                :phone="person.phone"
+                :fav="person.fav"
+                @setFav="setFav"
+                :id="person.id"
+            ></person>
         </ul>
     </section>
 </template>
@@ -18,27 +25,46 @@ export default {
                     name: "Manuel",
                     phone: "1231231",
                     email: "asdfas@adsfasdfa.com",
+                    fav: true,
                 },
                 {
                     id: "asdfaasdfasdfasdsd",
                     name: "Dan",
                     phone: "1231231",
                     email: "Dan@adsfasdfa.com",
+                    fav: false,
                 },
                 {
                     id: "asdfasdfasdasd",
                     name: "Sven",
                     phone: "1231231",
                     email: "Sven@adsfasdfa.com",
+                    fav: false,
                 },
                 {
                     id: "asdfasdfasd",
                     name: "Jo",
                     phone: "1231231",
                     email: "Jo@adsfasdfa.com",
+                    fav: true,
                 },
             ],
         };
+    },
+    methods: {
+        setFav(id) {
+            const person = this.friends.find((p) => p.id === id);
+            person.fav = !person.fav;
+        },
+        addPerson(id, name, email, phone) {
+            this.friends.unshift({
+                id: id,
+                name: name,
+                email: email,
+                phone: phone,
+                fav: false,
+            });
+        },
     },
 };
 </script>
@@ -76,7 +102,8 @@ header {
     list-style: none;
 }
 
-#app li {
+#app li,
+#add-person {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     margin: 1rem auto;
     border-radius: 10px;
